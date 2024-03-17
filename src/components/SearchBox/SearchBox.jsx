@@ -1,20 +1,16 @@
-import { useEffect, useId, useState } from 'react';
+import { useId } from 'react';
 import c from './SearchBox.module.css';
-import { useDispatch } from 'react-redux';
-import { changeFilter } from '../../redux/filtersSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeFilter, selectNameFilter } from '../../redux/filtersSlice';
 
 const SearchBox = () => {
   const elementId = useId();
-  const [value, setValue] = useState('');
+  const value = useSelector(selectNameFilter);
   const dispatch = useDispatch();
 
   const handleChange = e => {
-    setValue(e.target.value);
+    dispatch(changeFilter(e.target.value));
   };
-
-  useEffect(() => {
-    dispatch(changeFilter(value));
-  }, [value, dispatch]);
 
   return (
     <div className={c.container}>
